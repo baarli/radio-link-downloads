@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Radio Link — last ned og kom i gang</title>
+  <meta name="description" content="Last ned Radio Link Studio og UTE for Mac og Windows, og kom i gang på minutter." />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>Radio Link</h1>
+    <p class="tagline">Broadcast-kvalitet lyd mellom studio og hjemmestudio.</p>
+
+    <div class="role-toggle" data-role-toggle>
+      <button type="button" data-role="studio" class="is-active">🎛️ Studio</button>
+      <button type="button" data-role="ute">🏠 Ute / hjemme</button>
+    </div>
+    <p class="machine-hint">Din maskin: <span data-detected-os>oppdager …</span></p>
+  </header>
+
+  <main>
+    <!-- STEG 1 -->
+    <section class="step" id="steg-1-last-ned">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h2>Last ned appen</h2>
+        <p data-role-text="studio">Last ned <strong>Studio</strong>-appen på maskinen i studio.</p>
+        <p data-role-text="ute" hidden>Last ned <strong>UTE</strong>-appen på din maskin hjemme.</p>
+
+        <div class="downloads">
+          <!-- macOS -->
+          <a class="dl is-primary" data-dl="studio-macos"
+             href="https://github.com/baarli/radio-link-downloads/releases/latest/download/NRJ-Morgen-Studio-macOS.dmg">
+            ⬇ Studio for Mac <span class="dl-meta" data-meta="studio-macos"></span>
+          </a>
+          <a class="dl" data-dl="studio-windows"
+             href="https://github.com/baarli/radio-link-downloads/releases/latest/download/NRJ-Morgen-Studio-Windows.exe">
+            ⬇ Studio for Windows <span class="dl-meta" data-meta="studio-windows"></span>
+          </a>
+          <a class="dl is-primary" data-dl="ute-macos" hidden
+             href="https://github.com/baarli/radio-link-downloads/releases/latest/download/NRJ-Morgen-Ute-macOS.dmg">
+            ⬇ UTE for Mac <span class="dl-meta" data-meta="ute-macos"></span>
+          </a>
+          <a class="dl" data-dl="ute-windows" hidden
+             href="https://github.com/baarli/radio-link-downloads/releases/latest/download/NRJ-Morgen-Ute-Windows.exe">
+            ⬇ UTE for Windows <span class="dl-meta" data-meta="ute-windows"></span>
+          </a>
+        </div>
+
+        <p class="version-line">Versjon <span data-version>…</span> · <a href="#sjekksum">verifiser sjekksum</a></p>
+
+        <div class="callout">
+          <strong>Første gang du åpner appen:</strong>
+          <ul>
+            <li><strong>Mac:</strong> høyreklikk på appen → <em>Åpne</em> → <em>Åpne</em> igjen. (Appen er ikke signert ennå.)</li>
+            <li><strong>Windows:</strong> klikk <em>Mer info</em> → <em>Kjør likevel</em> i SmartScreen-dialogen.</li>
+            <li>Når appen spør om <strong>mikrofon</strong>: trykk <em>Tillat</em>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEG 2 -->
+    <section class="step" id="steg-2-tailscale">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h2>Bli med i det private nettet (Tailscale)</h2>
+        <p>Radio Link kobler de to maskinene over et privat nett. Installer Tailscale og logg på med invitasjonen du har fått.</p>
+        <ol>
+          <li>Last ned Tailscale: <a href="https://tailscale.com/download" rel="noopener">tailscale.com/download</a></li>
+          <li>Logg på med kontoen du ble invitert med.</li>
+          <li>La Tailscale være på i bakgrunnen.</li>
+        </ol>
+        <p class="muted">Får du ikke Tailscale på plass, kobler appen seg automatisk via relay-server som reserveløsning — du trenger ikke gjøre noe ekstra.</p>
+      </div>
+    </section>
+
+    <!-- STEG 3 -->
+    <section class="step" id="steg-3-par">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h2>Par med motparten</h2>
+        <div data-role-text="studio">
+          <p>Åpne Studio-appen. Den lager en <strong>tilkoblings-lenke</strong> (<code>rlink1://…</code>) og en QR-kode. Send lenken til den som er ute/hjemme — den varer i 24 timer.</p>
+        </div>
+        <div data-role-text="ute" hidden>
+          <p>Åpne UTE-appen og <strong>lim inn tilkoblings-lenken</strong> du fikk (<code>rlink1://…</code>), eller skann QR-koden. Appen kobler seg til — den prøver direkte først, så relay.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEG 4 -->
+    <section class="step" id="steg-4-test">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h2>Test lyd</h2>
+        <p>Bruk mikrofontesten i appen, snakk sammen, og sjekk latency-indikatoren. Grønt = klar for sending.</p>
+      </div>
+    </section>
+
+    <!-- KRAV -->
+    <section class="info" id="systemkrav">
+      <h2>Systemkrav</h2>
+      <ul>
+        <li>macOS 12+ eller Windows 10/11 (64-bit)</li>
+        <li>Mikrofon (helst kablet headset; unngå Bluetooth-headset som både mic og høyttaler — se feilsøking)</li>
+        <li>Tailscale-konto (invitasjon) for direkte tilkobling</li>
+      </ul>
+    </section>
+
+    <!-- FEILSØKING -->
+    <section class="info" id="feilsoking">
+      <h2>Feilsøking</h2>
+      <details><summary>Ingen lyd fra mikrofonen (Mac, Bluetooth-headset)</summary>
+        <p>Et Bluetooth-headset brukt som både mic og lyd tvinges til lav kvalitet og kan gi stille mikrofon. Appen foreslår «bruk innebygd mikrofon» — trykk på den, eller velg innebygd mic manuelt.</p>
+      </details>
+      <details><summary>«Kan ikke åpnes — uidentifisert utvikler» (Mac)</summary>
+        <p>Høyreklikk appen → <em>Åpne</em> → <em>Åpne</em>. Dette trengs bare første gang.</p>
+      </details>
+      <details><summary>SmartScreen blokkerer (Windows)</summary>
+        <p>Klikk <em>Mer info</em> → <em>Kjør likevel</em>.</p>
+      </details>
+      <details><summary>Får ikke koblet til studio</summary>
+        <p>Sjekk at Tailscale er på og pålogget på begge maskiner, at lenken ikke er over 24 timer gammel, og be om en ny lenke ved behov.</p>
+      </details>
+    </section>
+
+    <!-- SJEKKSUM -->
+    <section class="info" id="sjekksum">
+      <h2>Verifiser nedlastingen (valgfritt)</h2>
+      <p>Hver fil har en SHA-256-sjekksum (vises ved knappene). Sammenlign:</p>
+      <pre><code># Mac
+shasum -a 256 ~/Downloads/NRJ-Morgen-Ute-macOS.dmg
+
+# Windows (PowerShell)
+Get-FileHash $HOME\Downloads\NRJ-Morgen-Ute-Windows.exe -Algorithm SHA256</code></pre>
+    </section>
+  </main>
+
+  <footer>
+    <p>Radio Link · <a href="#steg-1-last-ned">Til toppen</a></p>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
