@@ -5,9 +5,11 @@
   function detectOS() {
     var p = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
     var ua = navigator.userAgent || "";
+    if (/android|iphone|ipad|ipod/i.test(p + " " + ua) ||
+        (/mac/i.test(p) && navigator.maxTouchPoints > 1)) return null;
     if (/mac/i.test(p) || /mac os x/i.test(ua)) return "macos";
     if (/win/i.test(p) || /windows/i.test(ua)) return "windows";
-    return "macos"; // sensible default for this user base
+    return null;
   }
 
   function humanSize(bytes) {
@@ -37,10 +39,11 @@
 
   function applyOS(os) {
     var span = document.querySelector("[data-detected-os]");
-    if (span) span.textContent = os === "windows" ? "Windows" : "macOS";
+    var label = { windows: "Windows", macos: "macOS" };
+    if (span) span.textContent = label[os] || "ikke gjenkjent";
     // Mark the matching-OS download as primary within the visible role.
     document.querySelectorAll(".dl[data-dl]").forEach(function (el) {
-      el.classList.toggle("is-primary", el.getAttribute("data-dl").indexOf(os) !== -1);
+      el.classList.toggle("is-primary", os !== null && el.getAttribute("data-dl").indexOf(os) !== -1);
     });
   }
 
