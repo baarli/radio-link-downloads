@@ -35,6 +35,7 @@
     });
     document.querySelector("[data-download-status]").hidden = offered;
     document.querySelector("[data-release-info]").hidden = !offered;
+    document.querySelector("#sjekksum").hidden = !offered;
   }
 
   function applyOS(os) {
@@ -52,17 +53,27 @@
         !/^v\d+\.\d+\.\d+(?:-[a-z0-9.-]+)?$/i.test(latest.version)) return;
 
     var releaseBase = "https://github.com/baarli/radio-link-downloads/releases/download/";
+    var checksumTemplate = document.querySelector("#checksum-template");
     document.querySelector("[data-version]").textContent = latest.version;
     document.querySelectorAll(".dl[data-dl]").forEach(function (link) {
       var filename = link.getAttribute("data-filename");
-      var entry = latest.files && latest.files[link.getAttribute("data-dl")];
+      var variant = link.getAttribute("data-dl");
+      var entry = latest.files && latest.files[variant];
       if (!entry || entry.name !== filename || !Number.isSafeInteger(entry.size_bytes) || entry.size_bytes < 1 ||
           typeof entry.sha256 !== "string" || !/^[a-f0-9]{64}$/i.test(entry.sha256) || /^0+$/.test(entry.sha256)) return;
 
       link.href = releaseBase + encodeURIComponent(latest.version) + "/" + encodeURIComponent(filename);
-      var metadata = link.querySelector(".dl-meta");
-      metadata.textContent = humanSize(entry.size_bytes);
-      metadata.title = "SHA-256: " + entry.sha256;
+      link.querySelector(".dl-meta").textContent = humanSize(entry.size_bytes);
+
+      var [role, platform] = variant.split("-");
+      var checksum = checksumTemplate.content.firstElementChild.cloneNode(true);
+      checksum.setAttribute("data-role-text", role);
+      checksum.querySelector("[data-checksum-filename]").textContent = filename;
+      checksum.querySelector("[data-checksum-value]").textContent = entry.sha256;
+      checksum.querySelector("[data-checksum-command]").textContent = platform === "macos"
+        ? "shasum -a 256 ~/Downloads/" + filename
+        : "Get-FileHash $HOME\\Downloads\\" + filename + " -Algorithm SHA256";
+      checksumTemplate.before(checksum);
     });
   }
 

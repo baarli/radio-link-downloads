@@ -33,6 +33,8 @@ details { border: 1px solid var(--line); border-radius: var(--radius); padding: 
 summary { cursor: pointer; font-weight: 600; }
 pre { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; overflow: auto; }
 code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+#sjekksum { overflow-wrap: anywhere; }
+#sjekksum pre { white-space: pre-wrap; }
 .muted { color: var(--muted); }
 footer { text-align: center; color: var(--muted); padding: 30px 20px 50px; }
 a { color: var(--accent); }

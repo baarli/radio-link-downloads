@@ -119,14 +119,16 @@
     </section>
 
     <!-- SJEKKSUM -->
-    <section class="info" id="sjekksum">
-      <h2>Verifiser nedlastingen (valgfritt)</h2>
-      <p>Hver fil har en SHA-256-sjekksum (vises ved knappene). Sammenlign:</p>
-      <pre><code># Mac
-shasum -a 256 ~/Downloads/NRJ-Morgen-Ute-macOS.dmg
-
-# Windows (PowerShell)
-Get-FileHash $HOME\Downloads\NRJ-Morgen-Ute-Windows.exe -Algorithm SHA256</code></pre>
+    <section class="info" id="sjekksum" aria-labelledby="checksum-heading" tabindex="-1" hidden>
+      <h2 id="checksum-heading">Verifiser nedlastingen (valgfritt)</h2>
+      <p>Kjør kommandoen for filen du lastet ned. Sammenlign resultatet med SHA-256-sjekksummen nedenfor.</p>
+      <template id="checksum-template">
+        <div hidden>
+          <h3 data-checksum-filename></h3>
+          <p>SHA-256 <code data-checksum-value></code></p>
+          <pre><code data-checksum-command></code></pre>
+        </div>
+      </template>
     </section>
   </main>
 
